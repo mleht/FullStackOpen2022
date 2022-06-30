@@ -1,0 +1,1 @@
+Part 3 can be found here: https://github.com/mleht/FullStackOpen2022_Part3
