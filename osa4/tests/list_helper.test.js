@@ -93,5 +93,16 @@ describe('Most likes', () => {
     const result = listHelper.mostLikes(blogs)
     expect(result).toEqual(blogs[2])
   })
+})
+
+
+describe('Most blogs', () => {
+
+  test('Most blogs', () => {
+    const result = listHelper.mostBlogs(blogs)
+    let person = { author: blogs[3].author, blogs: 3 }
+    expect(result).toEqual(person)
+  })
+
 
 })
