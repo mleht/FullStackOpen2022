@@ -87,10 +87,10 @@ describe('total likes', () => {
 })
 
 
-describe('Most likes', () => {
+describe('Favorite blog', () => {
 
-  test('Most likes', () => {
-    const result = listHelper.mostLikes(blogs)
+  test('Favorite blog', () => {
+    const result = listHelper.favoriteBlog(blogs)
     expect(result).toEqual(blogs[2])
   })
 })
@@ -103,6 +103,13 @@ describe('Most blogs', () => {
     let person = { author: blogs[3].author, blogs: 3 }
     expect(result).toEqual(person)
   })
+})
 
+describe('Most likes', () => {
 
+  test('Most likes', () => {
+    const result = listHelper.mostLikes(blogs)
+    let person = { author: blogs[1].author, likes: 17 }
+    expect(result).toEqual(person)
+  })
 })

@@ -13,12 +13,12 @@ const totalLikes = (blogs) => {
   return likes
 }
 
-const mostLikes = (blogs) => {
+const favoriteBlog = (blogs) => {
   const likes = blogs.map((b) => Number(b.likes))
   const highest = Math.max.apply(null, likes)
-  const mostLikes = blogs.find((b) => b.likes === highest)
+  const favorite = blogs.find((b) => b.likes === highest)
 
-  return mostLikes
+  return favorite
 }
 
 const mostBlogs = (blogs) => {                                // I found some help from here: https://www.w3resource.com/javascript-exercises/javascript-array-exercise-8.php
@@ -48,10 +48,40 @@ const mostBlogs = (blogs) => {                                // I found some he
   return person
 }
 
+const mostLikes = (blogs) => {
+  const arr1 = blogs.map(({ author, likes:likes_ })  => ({ author, likes_ }))
+
+  let obj = {}
+
+  // eslint-disable-next-line no-unused-vars
+  arr1.forEach((blog, index) => {
+    let { author, likes_ } = blog
+
+    if (!obj[author]) {                  // onko sama kuin vuorossa oleva author
+      obj[author] = {                    // jos ei niin luodaan olio
+        author,
+        likes: likes_
+      }
+    } else {                             // jos löytyy jo niin lisätään tykkäykset vanhoihin
+      let { likes } = obj[author]
+      obj[author].likes = likes + likes_
+    }
+  })
+
+  let result = Object.values(obj)
+
+  const likes = result.map((b) => Number(b.likes))
+  const highest = Math.max.apply(null, likes)
+  const favorite = result.find((b) => b.likes === highest)
+
+  return favorite
+}
+
 
 module.exports = {
   dummy,
   totalLikes,
-  mostLikes,
-  mostBlogs
+  favoriteBlog,
+  mostBlogs,
+  mostLikes
 }
