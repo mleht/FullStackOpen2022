@@ -2,14 +2,14 @@ const Blog = require('../models/blog')
 
 const initialBlogs = [
   {
-    title: 'HTML is easyx',
+    title: 'HTML is easy',
     author: 'Kari Kirjoittaja',
     url: 'www.jotain.fi',
     likes: 13,
   },
   {
-    title: 'React is not easy',
-    author: 'Jorma Jylli',
+    title: 'React & Redux',
+    author: 'Simo Silli',
     url: 'www.react.fi',
     likes: 34,
   },
