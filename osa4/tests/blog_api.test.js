@@ -116,6 +116,23 @@ describe('deleting a single blog', () => {
   })
 })
 
+describe('put method', () => {
+  test('updating the information of an individual blog', async () => {
+    const blogsAtStart = await helper.blogsInDb()
+    const blogToUpdate = blogsAtStart[0]
+    blogToUpdate.likes = 100
+    console.log(blogToUpdate.likes)
+
+    await api
+      .put(`/api/blogs/${blogToUpdate.id}`)
+      .send(blogToUpdate)
+      .expect(200)
+
+    const blogsAtTheMoment = await helper.blogsInDb()
+    expect(blogsAtTheMoment[0].likes).toEqual(100)
+  })
+})
+
 afterAll(() => {
   mongoose.connection.close()
 })
