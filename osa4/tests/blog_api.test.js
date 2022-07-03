@@ -1,6 +1,5 @@
 const mongoose = require('mongoose')
 const supertest = require('supertest')
-const { response } = require('../app')
 const app = require('../app')
 const api = supertest(app)
 const Blog= require('../models/blog')
@@ -97,6 +96,23 @@ describe('post method bad request', () => {
 
     const blogsAtEnd = await helper.blogsInDb()
     expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length)
+  })
+})
+
+describe('deleting a single blog', () => {
+  test('a blog can be deleted', async () => {
+    const blogsAtStart = await helper.blogsInDb()
+    const blogToDelete = blogsAtStart[0]
+
+    await api
+      .delete(`/api/blogs/${blogToDelete.id}`)
+      .expect(204)
+
+    const blogsAtEnd = await helper.blogsInDb()
+
+    expect(blogsAtEnd).toHaveLength(
+      helper.initialBlogs.length - 1
+    )
   })
 })
 
