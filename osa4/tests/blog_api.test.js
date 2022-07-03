@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const supertest = require('supertest')
+const { response } = require('../app')
 const app = require('../app')
 const api = supertest(app)
 const Blog= require('../models/blog')
@@ -82,6 +83,22 @@ describe('likes property', () => {
   })
 })
 
+describe('post method bad request', () => {
+  test('the backend responds to the request with the status code 400 Bad Request', async () => {
+    const newBlog = {
+      author: 'Victor Valdes',
+      likes: 19,
+    }
+
+    await api
+      .post('/api/blogs')
+      .send(newBlog)
+      .expect(400)
+
+    const blogsAtEnd = await helper.blogsInDb()
+    expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length)
+  })
+})
 
 afterAll(() => {
   mongoose.connection.close()
