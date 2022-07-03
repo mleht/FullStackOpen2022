@@ -62,6 +62,27 @@ describe('post method', () => {
   })
 })
 
+describe('likes property', () => {
+  test('if the likes property is missing from the request, it will default to the value 0', async () => {
+    const newBlog = {
+      title: 'New blog',
+      author: 'Pekka Puolukka',
+      url: 'www.puolukka.net',
+    }
+    await api
+      .post('/api/blogs')
+      .send(newBlog)
+      .expect(201)
+      .expect('Content-Type', /application\/json/)
+
+    const blogsAtEnd = await helper.blogsInDb()
+    // console.log(blogsAtEnd[2])
+    expect(blogsAtEnd[2].likes).toEqual(0)                  // beforeEach toiminnon jälkeen on kaksi blogia, joten tämä on kolmas
+
+  })
+})
+
+
 afterAll(() => {
   mongoose.connection.close()
 })
