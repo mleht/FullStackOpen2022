@@ -7,21 +7,30 @@ usersRouter.get('/', async (request, response) => {
   response.json(users)
 })
 
-usersRouter.post('/', async (request, response) => {
+usersRouter.post('/', async (request, response) => {      // virheenkäsittely on utils -> middleware NPM kirjasto 'express-async-errors' avulla
   const { username, name, password } = request.body
 
-  const saltRounds = 10
-  const passwordHash = await bcrypt.hash(password, saltRounds)
+  const user = await User.findOne({ username })
 
-  const user = new User({
-    username,
-    name,
-    passwordHash,
-  })
+  if (user) {
+    response.status(400).send('Username must be unique')
+  } else if (!password || password.length < 3) {
+    response.status(400).send('Password is missing or too short')
+  } else {
 
-  const savedUser = await user.save()
+    const saltRounds = 10
+    const passwordHash = await bcrypt.hash(password, saltRounds)
 
-  response.status(201).json(savedUser)
+    const user = new User({
+      username,
+      name,
+      passwordHash,
+    })
+
+    const savedUser = await user.save()
+
+    response.status(201).json(savedUser)
+  }
 })
 
 module.exports = usersRouter
