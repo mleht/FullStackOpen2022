@@ -1,4 +1,6 @@
 const logger = require('./logger')
+const jwt = require('jsonwebtoken')
+const User = require('../models/user')
 
 const unknownEndpoint = (request, response) => {
   response.status(404).send({ error: 'unknown endpoint' })
@@ -32,10 +34,23 @@ const tokenExtractor = (request, response, next) => {
   next()
 }
 
+const userExtractor = async (request, response, next) => {
+  // eslint-disable-next-line no-undef
+  const decodedToken = jwt.verify(request.token, process.env.SECRET)
+  if (!decodedToken) {
+    request.user = null
+  } else {
+    console.log('middleware ' + decodedToken.id.toString())
+    request.user = await User.findById(decodedToken.id.toString())
+  }
+  next()
+}
+
 module.exports = {
   unknownEndpoint,
   errorHandler,
-  tokenExtractor
+  tokenExtractor,
+  userExtractor
 }
 
 /*
@@ -46,4 +61,6 @@ Virheet ohjautuvat nyt middlewareen
 Muuten Async/await kanssa pitäisi käyttää Try-catch ja ohjata nextilla middlewareen
 
 Tokenextractor middleware rekisteröidään ennen routeja tiedostossa app.js, joten routet pääsevät tokeniin käsiksi suoraan viittaamalla request.token
+
+Userextractor käyttöön vain blogs post ja delete metodeille "middleware.userExtractor" ja routet käyttäjään käsiksi suoraan viittaamalla request.user
 */
