@@ -24,9 +24,18 @@ const errorHandler = (error, request, response, next) => {
   next(error)
 }
 
+const tokenExtractor = (request, response, next) => {
+  const authorization = request.get('authorization')
+  if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
+    request.token = authorization.substring(7)
+  }
+  next()
+}
+
 module.exports = {
   unknownEndpoint,
-  errorHandler
+  errorHandler,
+  tokenExtractor
 }
 
 /*
@@ -35,4 +44,6 @@ app.js tiedostossa heti expressin alla: require('express-async-errors')
 lisäksi app.use(middleware.errorHandler)
 Virheet ohjautuvat nyt middlewareen
 Muuten Async/await kanssa pitäisi käyttää Try-catch ja ohjata nextilla middlewareen
+
+Tokenextractor middleware rekisteröidään ennen routeja tiedostossa app.js, joten routet pääsevät tokeniin käsiksi suoraan viittaamalla request.token
 */
