@@ -40,7 +40,7 @@ const userExtractor = async (request, response, next) => {
   if (!decodedToken) {
     request.user = null
   } else {
-    console.log('middleware ' + decodedToken.id.toString())
+    // console.log('middleware ' + decodedToken.id.toString())
     request.user = await User.findById(decodedToken.id.toString())
   }
   next()

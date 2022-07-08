@@ -5,6 +5,7 @@ const api = supertest(app)
 const User = require('../models/user')
 const helper = require('./test_helper')
 
+
 beforeEach(async () => {
   await User.deleteMany({})                                 // https://www.mongodb.com/docs/manual/reference/method/db.collection.deleteMany/
   let userObject = new User(helper.initialUsers[0])
