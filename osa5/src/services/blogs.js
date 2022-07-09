@@ -7,10 +7,17 @@ const setToken = newToken => {
   token = `bearer ${newToken}`
 }
 
-
 const getAll = () => {
   const request = axios.get(baseUrl)
   return request.then(response => response.data)
 }
 
-export default { getAll, setToken }
+const create = async newObject => {
+  const config = {
+    headers: { Authorization: token },          // lisätään kirjautuneen käyttäjän token HTTP-pyynnön Authorization-headeriin.
+  }
+  const response = await axios.post(baseUrl, newObject, config)
+  return response.data
+}
+
+export default { getAll, setToken, create }
