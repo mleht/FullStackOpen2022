@@ -13,6 +13,7 @@ const App = () => {
   const [newTitle, setNewTitle] = useState("")
   const [newAuthor, setNewAuthor] = useState("")
   const [newUrl, setNewUrl] = useState("")
+  const [isPositive, setIsPositive] = useState(true)
 
 
   useEffect(() => {
@@ -37,19 +38,21 @@ const App = () => {
       const user = await loginService.login({
         username, password,
       })
+      setUser(user)
+      blogService.setToken(user.token)
 
       window.localStorage.setItem(
         'loggedUser', JSON.stringify(user)
       ) 
 
-      setUser(user)
       setUsername('')
       setPassword('')
     } catch (exception) {
+      setIsPositive(false);
       setErrorMessage('wrong credentials')
       setTimeout(() => {
         setErrorMessage(null)
-      }, 5000)
+      }, 2000)
     }
   }
 
@@ -64,9 +67,15 @@ const App = () => {
       .create(blogObject)   
       .then(returnedBlog => {
         setBlogs(blogs.concat(returnedBlog))  
+        setErrorMessage('a new blog added: ' + newTitle)
         setNewTitle('')
         setNewAuthor('')
         setNewUrl('')
+        setIsPositive(true);
+  
+      setTimeout(() => {
+      setErrorMessage(null)
+    }, 2000);
       })
     }
 
@@ -86,19 +95,19 @@ const App = () => {
   const logout = () => {
     localStorage.clear();
     setUser(null);
-  
-    setErrorMessage("You have been successfully logged out");
+    setIsPositive(true);
+    setErrorMessage("You have been successfully logged out")
   
     setTimeout(() => {
-      setErrorMessage(null);
-    }, 4000);
+      setErrorMessage(null)
+    }, 2000);
   };
 
   if (user === null) {
     return (
       <div>
         <h2>Log in to application</h2>
-        <Notification message={errorMessage} />
+        <Notification message={errorMessage} positive={isPositive} />
       
       <form onSubmit={handleLogin}>
         <div>
@@ -128,6 +137,7 @@ const App = () => {
   return (
     <div>
       <h2>Blogs</h2>
+      <Notification message={errorMessage} positive={isPositive} />
       <p>{user.name} logged in <button onClick={logout}>Logout</button></p>
       <h2>Create new</h2>
       <form onSubmit={addBlog}>

@@ -1,10 +1,17 @@
-const Notification = ({ message }) => {
+const Notification = ({ message, positive }) => {
+  let style = "";
+
   if (message === null) {
     return null
   }
-
+  if (positive === true) {
+      style = "pos";
+    } else {
+      style = "neg";
+    }
+    
   return (
-    <div>
+    <div className={style}>
       {message}
     </div>
   )

@@ -1,0 +1,29 @@
+.pos {
+  color: green;
+  background: lightgrey;
+  font-size: 26px;
+  font-weight: medium;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 6px;
+  padding: 5px;
+  margin-bottom: 15px;
+  margin-top: 15px;
+  width: 70%;
+  margin-left: 10%;
+}
+
+.neg {
+  color: red;
+  background: lightgrey;
+  font-size: 26px;
+  font-weight: medium;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 6px;
+  padding: 5px;
+  margin-bottom: 15px;
+  margin-top: 15px;
+  width: 70%;
+  margin-left: 10%;
+}
