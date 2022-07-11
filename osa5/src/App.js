@@ -1,8 +1,10 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import Notification from './components/Notification'
+import BlogForm from './components/BlogForm'
+import Togglable from './components/Togglable'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -10,9 +12,6 @@ const App = () => {
   const [password, setPassword] = useState('') 
   const [user, setUser] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
-  const [newTitle, setNewTitle] = useState("")
-  const [newAuthor, setNewAuthor] = useState("")
-  const [newUrl, setNewUrl] = useState("")
   const [isPositive, setIsPositive] = useState(true)
 
 
@@ -56,21 +55,13 @@ const App = () => {
     }
   }
 
-  const addBlog = (event) => {
-    event.preventDefault()     
-    const blogObject = {
-      title: newTitle,
-      author: newAuthor,
-      url: newUrl,
-    }
+  const addBlog = (blogObject) => {
+    blogFormRef.current.toggleVisibility()
     blogService
       .create(blogObject)   
       .then(returnedBlog => {
         setBlogs(blogs.concat(returnedBlog))  
-        setErrorMessage('a new blog added: ' + newTitle)
-        setNewTitle('')
-        setNewAuthor('')
-        setNewUrl('')
+        setErrorMessage('a new blog added: ' + blogObject.title)
         setIsPositive(true);
   
       setTimeout(() => {
@@ -79,18 +70,7 @@ const App = () => {
       })
     }
 
-  const handleTitleChange = (event) => {
-    setNewTitle(event.target.value)
-  }
-
-  const handleAuthorChange = (event) => {
-    setNewAuthor(event.target.value)
-  }
-
-  const handleUrlChange = (event) => {
-    setNewUrl(event.target.value)
-  }
-
+  const blogFormRef = useRef()
 
   const logout = () => {
     localStorage.clear();
@@ -139,13 +119,9 @@ const App = () => {
       <h2>Blogs</h2>
       <Notification message={errorMessage} positive={isPositive} />
       <p>{user.name} logged in <button onClick={logout}>Logout</button></p>
-      <h2>Create new</h2>
-      <form onSubmit={addBlog}>
-        <div>title: <input value={newTitle} onChange={handleTitleChange}/></div>
-        <div>author: <input value={newAuthor} onChange={handleAuthorChange}/></div>
-        <div>url: <input value={newUrl} onChange={handleUrlChange}/></div>
-        <button type="submit">Create</button>
-      </form>  
+      <Togglable buttonLabel='New blog' ref={blogFormRef}>
+        <BlogForm addBlog={addBlog}/>
+      </Togglable>
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
       )}
