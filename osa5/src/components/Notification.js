@@ -1,17 +1,17 @@
 import PropTypes from 'prop-types'
 
 const Notification = ({ message, positive }) => {
-  let style = "";
+  let style = ''
 
   if (message === null) {
     return null
   }
   if (positive === true) {
-      style = "pos";
-    } else {
-      style = "neg";
-    }
-    
+    style = 'pos'
+  } else {
+    style = 'neg'
+  }
+
   return (
     <div className={style}>
       {message}
