@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types'
+
 const Notification = ({ message, positive }) => {
   let style = "";
 
@@ -15,6 +17,12 @@ const Notification = ({ message, positive }) => {
       {message}
     </div>
   )
+}
+
+Notification.displayName = 'Notification'
+
+Notification.propTypes = {
+  positive: PropTypes.bool.isRequired
 }
 
 export default Notification
