@@ -70,6 +70,21 @@ const App = () => {
       })
     }
 
+    const addLike = (blogObject) => {
+      blogService
+        .update(blogObject)   
+        .then(returnedBlog => { 
+          setErrorMessage('a new like added for: ' + blogObject.title)
+          setIsPositive(true);
+          blogService.getAll().then(blogs => setBlogs( blogs )) 
+        setTimeout(() => {
+        setErrorMessage(null)
+      }, 2000);
+        })
+      }
+  
+
+
   const blogFormRef = useRef()
 
   const logout = () => {
@@ -123,7 +138,7 @@ const App = () => {
         <BlogForm addBlog={addBlog}/>
       </Togglable>
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
+        <Blog key={blog.id} blog={blog} addLike={addLike} />
       )}
     </div>
   )
