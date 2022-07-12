@@ -83,6 +83,26 @@ const App = () => {
         })
       }
   
+      const removeBlog = (id) => {
+        const remove = blogs.find((b) => b.id === id);
+        const confirm = window.confirm(
+          `Are you sure you want to permanently remove: ${remove.title}`
+        )
+    
+        if (confirm) {
+          blogService
+            .remove(id) 
+            .then((response) => {
+                setBlogs(blogs.filter((filtered) => filtered.id !== id));   // Blogs tilan päivitys -> Blogeista tulee filtered nimisiä. Ne joiden id on eri kuin poistettavan saavat jäädä.
+                setErrorMessage(`${remove.title} deleted!`);
+                setIsPositive(true);
+                setTimeout(() => {
+                  setErrorMessage(null)
+                }, 2000);
+                })
+              }
+            }
+            
 
 
   const blogFormRef = useRef()
@@ -95,8 +115,9 @@ const App = () => {
   
     setTimeout(() => {
       setErrorMessage(null)
-    }, 2000);
-  };
+    }, 2000)
+  }
+
 
   if (user === null) {
     return (
@@ -140,7 +161,7 @@ const App = () => {
       {blogs
         .sort((a, b) => b.likes - a.likes)
         .map(blog =>
-          <Blog key={blog.id} blog={blog} addLike={addLike} />
+          <Blog key={blog.id} blog={blog} addLike={addLike} removeBlog={removeBlog} loggedUser={user.username}/>
       )}
     </div>
   )
