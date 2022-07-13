@@ -10,7 +10,20 @@ const Blog = ({ blog, addLike, removeBlog, loggedUser }) => {
     marginBottom: 5
   }
 
-  const handleLikeClick = (blog) => {
+  const handleLikeClick = () => {
+    const blogObject = {
+      id: blog.id,
+      title: blog.title,
+      author: blog.author,
+      url: blog.url,
+      user: blog.user.id,
+      likes: blog.likes +1
+    }
+    addLike(blogObject)
+  }
+
+  /*  handleLikeClick koodia muutettu hieman Jest testin takia
+   const handleLikeClick = (blog) => {
     addLike({
       id: blog.id,
       title: blog.title,
@@ -20,6 +33,7 @@ const Blog = ({ blog, addLike, removeBlog, loggedUser }) => {
       likes: blog.likes +1
     })
   }
+  */
 
   const deleteButton = () => {
     // console.log("logged " + loggedUser + " bloguser " + blog.user.username)
@@ -45,7 +59,8 @@ const Blog = ({ blog, addLike, removeBlog, loggedUser }) => {
       <br/>
       {blog.url}
       <br/>
-    likes {blog.likes} <button onClick={() => handleLikeClick(blog)}>Like</button>
+      {/* likes {blog.likes} <button onClick={() => handleLikeClick(blog)}>Like</button> */}
+      likes {blog.likes} <button onClick={handleLikeClick}>Like</button>
       <br/>
       {blog.user.name}
       <br/>

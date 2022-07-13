@@ -104,8 +104,6 @@ const App = () => {
     }
   }
 
-
-
   const blogFormRef = useRef()
 
   const logout = () => {
