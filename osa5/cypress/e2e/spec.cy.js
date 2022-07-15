@@ -44,4 +44,24 @@ describe('Blog app', function() {
     })
   })
 
+  describe('When logged in', function() {
+    beforeEach(function() {
+      cy.get('#username').type('testi')
+      cy.get('#password').type('testi')
+      cy.get('#login-button').click()
+    })
+
+    it('A blog can be created', function() {
+      cy.contains('New blog').click()
+      cy.get('input[placeholder="title"]').type('test_title')
+      cy.get('input[placeholder="author"]').type('test_author')
+      cy.get('input[placeholder="url"]').type('test_url')
+      cy.get('#create-button').click()
+      cy.get('.pos')
+        .should('contain', 'a new blog added')
+        .and('have.css', 'color', 'rgb(0, 128, 0)')
+      cy.contains('test_title test_author View details')
+    })
+  })
+
 })
