@@ -62,6 +62,23 @@ describe('Blog app', function() {
         .and('have.css', 'color', 'rgb(0, 128, 0)')
       cy.contains('test_title test_author View details')
     })
+
+    it('Users can like a blog', function() {
+      cy.contains('New blog').click()
+      cy.get('input[placeholder="title"]').type('test_title')
+      cy.get('input[placeholder="author"]').type('test_author')
+      cy.get('input[placeholder="url"]').type('test_url')
+      cy.get('#create-button').click()
+      cy.get('.pos')
+
+      cy.contains('View details').click()
+      cy.contains('likes 0')
+      cy.contains('Like').click()
+      cy.get('.pos')
+        .should('contain', 'a new like added')
+        .and('have.css', 'color', 'rgb(0, 128, 0)')
+      cy.contains('likes 1')
+    })
   })
 
 })
