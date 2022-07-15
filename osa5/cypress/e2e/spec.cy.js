@@ -95,6 +95,53 @@ describe('Blog app', function() {
         .should('contain', 'deleted')
         .and('have.css', 'color', 'rgb(0, 128, 0)')
     })
+
+    it('Blogs are ordered according to likes with the blog with the most likes being first.', function() {
+      cy.contains('New blog').click()
+      cy.get('input[placeholder="title"]').type('test_title1')
+      cy.get('input[placeholder="author"]').type('test_author1')
+      cy.get('input[placeholder="url"]').type('test_url1')
+      cy.get('#create-button').click()
+
+      cy.contains('New blog').click()
+      cy.get('input[placeholder="title"]').type('test_title2')
+      cy.get('input[placeholder="author"]').type('test_author2')
+      cy.get('input[placeholder="url"]').type('test_url2')
+      cy.get('#create-button').click()
+
+      cy.contains('New blog').click()
+      cy.get('input[placeholder="title"]').type('test_title3')
+      cy.get('input[placeholder="author"]').type('test_author3')
+      cy.get('input[placeholder="url"]').type('test_url3')
+      cy.get('#create-button').click()
+
+      cy.contains('test_title1').find('button').click()
+      cy.contains('Like').click()
+      cy.contains('likes 1')
+      cy.contains('Hide details').click()
+
+      cy.contains('test_title2').find('button').click()
+      cy.contains('Like').click()
+      cy.contains('likes 1')
+      cy.contains('Like').click()
+      cy.contains('likes 2')
+      cy.contains('Hide details').click()
+
+      cy.contains('test_title3').find('button').click()
+      cy.contains('Like').click()
+      cy.contains('likes 1')
+      cy.contains('Like').click()
+      cy.contains('likes 2')
+      cy.contains('Like').click()
+      cy.contains('likes 3')
+      cy.contains('Hide details').click()
+
+      cy.get('.blog').eq(0).should('contain', 'test_title3')
+      cy.get('.blog').eq(1).should('contain', 'test_title2')
+      cy.get('.blog').eq(2).should('contain', 'test_title1')
+
+
+    })
   })
 
 })
