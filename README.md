@@ -36,3 +36,10 @@ Testing React apps
 - props.children and proptypes
 - Testing React apps
 - End to end testing
+
+Part 6
+State management with Redux
+- Flux-architecture and Redux
+- Many reducers
+- Communicating with server in a redux application
+- connect
