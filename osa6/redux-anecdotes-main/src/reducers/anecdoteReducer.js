@@ -33,6 +33,8 @@ const reducer = (state = initialState, action) => {
       return state.map(anecdote =>                            // Palautetaan uusi tila, joka saadaan ottamalla kaikki vanhan tilan anekdootit paitsi uusi juuri luotu muuttunut olio 
         anecdote.id !== id ? anecdote : changedAnecdote 
       )
+    case 'NEW':                           // NEW-tyyppisen actionin seurauksena tilaan lisätään uusi actionin seurauksena tilaan lisätään uusi anekdoottihyödyntämällä JavaScriptin array spread -syntaksia
+      return [...state, action.data]
 
   default:
     return state
@@ -44,6 +46,20 @@ export const addVote = (id) => {
   return {
     type: 'VOTE',
     data: { id }
+  }
+}
+
+const generateId = () =>
+  Number((Math.random() * 1000000).toFixed(0))
+
+export const createAnecdote = (content) => {
+  return {
+    type: 'NEW',
+    data: {
+      content,
+      votes: 0,
+      id: generateId()
+    }
   }
 }
 
