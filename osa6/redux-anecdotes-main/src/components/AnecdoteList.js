@@ -1,5 +1,6 @@
 import { addVote } from '../reducers/anecdoteReducer'
 import { useDispatch, useSelector } from 'react-redux'
+import { show, hide } from '../reducers/notificationReducer'
 
 
 const AnecdoteList = () => {
@@ -7,8 +8,13 @@ const AnecdoteList = () => {
   const dispatch = useDispatch()
  
   const vote = (id) => {
-    console.log('vote', id)
-    dispatch(addVote(id))        // advote on anecdoteReducer.js tiedostossa, joka taas on action, joka lähettää type 'VOTE' reducerille
+    // console.log('vote', id)
+    const clicked = anecdotes.find(a => a.id === id)
+    dispatch(addVote(id))                         // advote on anecdoteReducer.js tiedostossa, joka taas on action, joka lähettää type 'VOTE' reducerille
+    dispatch(show(`You voted '${clicked.content}'`))
+    setTimeout(() => {
+      dispatch(hide(''))  
+    }, 5000)
   }
 
 
