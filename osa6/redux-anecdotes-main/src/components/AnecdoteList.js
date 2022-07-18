@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 
 const AnecdoteList = () => {
-  const anecdotes = useSelector(state => state)
+  const anecdotes = useSelector(state => state.anecdoteReducer)
   const dispatch = useDispatch()
  
   const vote = (id) => {
@@ -14,7 +14,7 @@ const AnecdoteList = () => {
 
   return (
     <div>
-      {anecdotes.sort((a, b) => b.votes - a.votes).map(anecdote =>
+      {[...anecdotes].sort((a, b) => b.votes - a.votes).map(anecdote =>         // {anecdotes.sort((a, b) jne. muutti alkuperäistä taulukkoa, josta välillä virhe konsoliin. Siksi vaihto tähän tyyliin. Orderby olisi toinen vaihtoehto.
         <div key={anecdote.id}>
           <div>
             {anecdote.content}
