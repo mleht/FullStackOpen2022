@@ -1,4 +1,4 @@
-// anecdoteSliceReducer.js korvaa tämän tiedoston
+import { createSlice } from '@reduxjs/toolkit'
 
 const anecdotesAtStart = [
   'If it hurts, do it more often',
@@ -21,13 +21,13 @@ const asObject = (anecdote) => {
 
 const initialState = anecdotesAtStart.map(asObject)
 
-const anecdoteReducer = (state = initialState, action) => {
-  console.log('state now: ', state)
-  console.log('action', action)
-  switch(action.type){
-    case 'VOTE':
-      const id = action.data.id
-      const anecdotToChange = state.find(a => a.id === id)   // etsitään olio, jonka äänimäärää lisätään
+const anecdoteSlice = createSlice({
+  name: 'notification',                                      
+  initialState,
+  reducers: {                                               
+    voteAnecdote(state, action) {
+      const id = action.payload
+      const anecdotToChange = state.find(a => a.id === id)
       const changedAnecdote = {                               // Luodaan  uusi olio, joka on muuten kopio muuttuvasta oliosta, mutta kentän äänimäärä kasvaa yhdellä
         ...anecdotToChange, 
         votes: anecdotToChange.votes + 1
@@ -35,34 +35,16 @@ const anecdoteReducer = (state = initialState, action) => {
       return state.map(anecdote =>                            // Palautetaan uusi tila, joka saadaan ottamalla kaikki vanhan tilan anekdootit paitsi uusi juuri luotu muuttunut olio 
         anecdote.id !== id ? anecdote : changedAnecdote 
       )
-    case 'NEW':                           // NEW-tyyppisen actionin seurauksena tilaan lisätään uusi actionin seurauksena tilaan lisätään uusi anekdoottihyödyntämällä JavaScriptin array spread -syntaksia
-      return [...state, action.data]
-
-  default:
-    return state
-  }
-
-}
-
-export const addVote = (id) => {
-  return {
-    type: 'VOTE',
-    data: { id }
-  }
-}
-
-const generateId = () =>
-  Number((Math.random() * 1000000).toFixed(0))
-
-export const createAnecdote = (content) => {
-  return {
-    type: 'NEW',
-    data: {
-      content,
-      votes: 0,
-      id: generateId()
+    },
+    addAnecdote(state, action) {
+      state.push({
+        content: action.payload,
+        id: getId(),
+        votes: 0
+     })
     }
   }
-}
+})
 
-export default anecdoteReducer
+export const { voteAnecdote, addAnecdote } = anecdoteSlice.actions
+export default anecdoteSlice.reducer

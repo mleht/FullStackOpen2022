@@ -1,4 +1,4 @@
-import { createAnecdote } from '../reducers/anecdoteReducer'
+import { addAnecdote } from '../reducers/anecdoteSliceReducer'
 import { useDispatch } from 'react-redux'
 import { show, hide } from '../reducers/notificationReducer'
 
@@ -10,7 +10,7 @@ const AnecdoteForm = () => {
     event.preventDefault()
     const content = event.target.anecdote.value     // content tulee returnin formista nimeltään anecdote
     event.target.anecdote.value = ''
-    dispatch(createAnecdote(content))
+    dispatch(addAnecdote(content))
     dispatch(show(`You created '${content}'`))
     setTimeout(() => {
       dispatch(hide(''))  
