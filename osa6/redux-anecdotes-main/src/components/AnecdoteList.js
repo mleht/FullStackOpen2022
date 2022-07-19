@@ -4,9 +4,15 @@ import { show, hide } from '../reducers/notificationReducer'
 
 
 const AnecdoteList = () => {
-  const anecdotes = useSelector(state => state.anecdoteSliceReducer)
+  let anecdotes = useSelector(state => state.anecdoteSliceReducer)
+  const filter = useSelector(state => state.filterReducer)   
   const dispatch = useDispatch()
  
+  if (filter) {
+    let filterSmall = filter.toLowerCase()
+    anecdotes = anecdotes.filter((a) => a.content.toLowerCase().includes(filterSmall))
+  }
+
   const vote = (id) => {
     // console.log('vote', id)
     const clicked = anecdotes.find(a => a.id === id)
