@@ -27,10 +27,17 @@ const anecdoteSlice = createSlice({
   }
 })
 
-export const initializeAnecdotes = () => {
+export const initializeAnecdotes = () => {                    // Redux Thunk -kirjaston avulla toteutetty asynkroninen action
   return async dispatch => {
     const anecdotes = await anecdoteService.getAll()
     dispatch(setAnecdotes(anecdotes))
+  }
+}
+
+export const createAnecdote = (content) => {                  // Redux Thunk -kirjaston avulla toteutetty asynkroninen action
+  return async (dispatch) => {
+    const newAnecdote = await anecdoteService.createNew(content);
+    dispatch(addAnecdote(newAnecdote))
   }
 }
 

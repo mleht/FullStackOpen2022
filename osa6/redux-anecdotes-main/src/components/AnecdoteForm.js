@@ -1,7 +1,6 @@
-import { addAnecdote } from '../reducers/anecdoteSliceReducer'
 import { useDispatch } from 'react-redux'
 import { show, hide } from '../reducers/notificationReducer'
-import anecdoteService from '../services/anecdotes'
+import { createAnecdote } from '../reducers/anecdoteSliceReducer'
 
 
 const AnecdoteForm = () => {
@@ -11,8 +10,7 @@ const AnecdoteForm = () => {
     event.preventDefault()
     const content = event.target.anecdote.value     // content tulee returnin formista nimeltään anecdote
     event.target.anecdote.value = ''
-    const newAnecdote = await anecdoteService.createNew(content);
-    dispatch(addAnecdote(newAnecdote))
+    dispatch(createAnecdote(content))
     dispatch(show(`You created '${content}'`))
     setTimeout(() => {
       dispatch(hide(''))  
