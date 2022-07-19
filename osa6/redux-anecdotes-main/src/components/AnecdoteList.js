@@ -1,6 +1,6 @@
 import { newVote } from '../reducers/anecdoteSliceReducer'
 import { useDispatch, useSelector } from 'react-redux'
-import { show, hide } from '../reducers/notificationReducer'
+import { notification } from '../reducers/notificationReducer'
 
 
 const AnecdoteList = () => {
@@ -14,14 +14,9 @@ const AnecdoteList = () => {
   }
 
   const vote = (id) => {
-    // console.log('vote', id)
     const clicked = anecdotes.find(a => a.id === id)
-    // dispatch(voteAnecdote(id))                         // voteAnecdote importoitu anecdoteSliceReducer.js tiedostosta
     dispatch(newVote(clicked))
-    dispatch(show(`You voted '${clicked.content}'`))
-    setTimeout(() => {
-      dispatch(hide(''))  
-    }, 5000)
+    dispatch(notification(`You voted '${clicked.content}'`, 5))
   }
 
 

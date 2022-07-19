@@ -1,7 +1,6 @@
 import { useDispatch } from 'react-redux'
-import { show, hide } from '../reducers/notificationReducer'
 import { createAnecdote } from '../reducers/anecdoteSliceReducer'
-
+import { notification } from '../reducers/notificationReducer'
 
 const AnecdoteForm = () => {
   const dispatch = useDispatch()
@@ -11,10 +10,7 @@ const AnecdoteForm = () => {
     const content = event.target.anecdote.value     // content tulee returnin formista nimeltään anecdote
     event.target.anecdote.value = ''
     dispatch(createAnecdote(content))
-    dispatch(show(`You created '${content}'`))
-    setTimeout(() => {
-      dispatch(hide(''))  
-    }, 5000)
+    dispatch(notification(`You created '${content}'`, 5))
   }
 
   return (
