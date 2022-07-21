@@ -43,3 +43,11 @@ State management with Redux
 - Many reducers
 - Communicating with server in a redux application
 - connect
+
+Part 7
+React router, custom hooks, styling app with CSS and webpack
+- React-router
+- Custom hooks
+- More about styles
+- Webpack
+- Class components
