@@ -1,0 +1,75 @@
+.app {
+  text-align: center;
+  font-size: 20px;
+  color: #282c34;
+  margin-left: 0%;
+  margin-right: 0%;
+  min-height: 700px;
+  background-color: white;
+}
+
+.login-button {
+  margin-top: 10px;
+  cursor: pointer;
+  font-size: 15px;
+  background: chocolate;
+  border: 2px solid rgb(102, 43, 1);
+  color: #fff;
+  padding: 10px 20px;
+}
+
+.login-button:hover {
+  background: rgb(198, 147, 110);
+}
+
+.button2 {
+  cursor: pointer;
+  font-size: 15px;
+  background: chocolate;
+  border: 1px solid rgb(102, 43, 1);
+  color: #fff;
+  padding: 5px 10px;
+}
+
+.button2:hover {
+  background: rgb(198, 147, 110);
+}
+
+h2 {
+  background: chocolate;
+  width: auto;
+  border-radius: 6px 6px 6px 6px;
+  box-shadow: 0 0 0 1px #5f5a4b, 1px 1px 6px 1px rgba(10, 10, 0, 0.5);
+  color: #ffffff;
+  font-weight: bold;
+  height: 60px;
+  line-height: 23px;
+  margin: 12px 0 !important;
+  padding: 5px 0 5px 10px;
+  text-shadow: 2px 2px 3px #222222;
+}
+
+.logged {
+  background: rgb(251, 195, 155);
+  width: auto;
+  border-radius: 3px 3px 3px 3px;
+  box-shadow: 0 0 0 1px #5f5a4b, 1px 1px 6px 1px rgba(10, 10, 0, 0.5);
+  color: black;
+  height: 40px;
+  line-height: 23px;
+  padding: 5px 0 5px 10px;
+  margin-bottom: 20px;
+  margin-top: 10px;
+}
+
+.margbot {
+  margin-bottom: 20px;
+}
+
+.margtop {
+  margin-top: 5px;
+}
+
+.container {
+  max-width: 500px;
+}

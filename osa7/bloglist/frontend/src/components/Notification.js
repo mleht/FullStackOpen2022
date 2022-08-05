@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types'
+import Alert from 'react-bootstrap/Alert'
 
 const Notification = ({ message, positive }) => {
   let style = ''
@@ -7,12 +8,16 @@ const Notification = ({ message, positive }) => {
     return null
   }
   if (positive === true) {
-    style = 'pos'
+    style = 'success'
   } else {
-    style = 'neg'
+    style = 'danger'
   }
 
-  return <div className={style}>{message}</div>
+  return (
+    <div className="container">
+      <Alert variant={style}>{message}</Alert>
+    </div>
+  )
 }
 
 Notification.displayName = 'Notification'

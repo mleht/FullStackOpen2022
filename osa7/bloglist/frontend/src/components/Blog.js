@@ -38,7 +38,11 @@ const Blog = ({ blog, addLike, removeBlog, loggedUser }) => {
   const deleteButton = () => {
     // console.log("logged " + loggedUser + " bloguser " + blog.user.username)
     if (loggedUser === blog.user.username) {
-      return <button onClick={() => removeBlog(blog.id)}>Delete</button>
+      return (
+        <button className="button2 margtop" onClick={() => removeBlog(blog.id)}>
+          Delete
+        </button>
+      )
     } else {
       return null
     }
@@ -48,8 +52,11 @@ const Blog = ({ blog, addLike, removeBlog, loggedUser }) => {
     <div style={blogStyle} className="blog">
       {!showDetails && (
         <>
-          {blog.title} {blog.author}{' '}
-          <button onClick={() => setShowDetails(!showDetails)}>
+          {blog.title} {blog.author} <br />
+          <button
+            className="button2 margtop"
+            onClick={() => setShowDetails(!showDetails)}
+          >
             View details
           </button>
         </>
@@ -57,15 +64,21 @@ const Blog = ({ blog, addLike, removeBlog, loggedUser }) => {
 
       {showDetails && (
         <>
-          {blog.title} {blog.author}{' '}
-          <button onClick={() => setShowDetails(!showDetails)}>
+          <button
+            className="button2 margbot"
+            onClick={() => setShowDetails(!showDetails)}
+          >
             Hide details
           </button>
           <br />
+          {blog.title} {blog.author} <br />
           {blog.url}
           <br />
           {/* likes {blog.likes} <button onClick={() => handleLikeClick(blog)}>Like</button> */}
-          likes {blog.likes} <button onClick={handleLikeClick}>Like</button>
+          likes {blog.likes}{' '}
+          <button className="button2" onClick={handleLikeClick}>
+            Like
+          </button>
           <br />
           {blog.user.name}
           <br />

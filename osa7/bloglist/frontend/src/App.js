@@ -6,6 +6,7 @@ import loginService from './services/login'
 import Notification from './components/Notification'
 import BlogForm from './components/BlogForm'
 import Togglable from './components/Togglable'
+import './app.css'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -109,45 +110,50 @@ const App = () => {
 
   if (user === null) {
     return (
-      <div>
+      <div className="container">
         <h2>Log in to application</h2>
         <Notification message={errorMessage} positive={isPositive} />
 
-        <form onSubmit={handleLogin}>
+        <form onSubmit={handleLogin} className="login-form">
           <div>
-            username
             <input
+              className="login-input"
+              placeholder="Username"
               id="username"
               type="text"
               value={username}
               name="Username"
               onChange={({ target }) => setUsername(target.value)}
             />
+            <div>
+              <input
+                className="login-input"
+                placeholder="password"
+                id="password"
+                type="password"
+                value={password}
+                name="Password"
+                onChange={({ target }) => setPassword(target.value)}
+              />
+            </div>
+            <button type="submit" id="login-button" className="login-button">
+              login
+            </button>
           </div>
-          <div>
-            password
-            <input
-              id="password"
-              type="password"
-              value={password}
-              name="Password"
-              onChange={({ target }) => setPassword(target.value)}
-            />
-          </div>
-          <button type="submit" id="login-button">
-            login
-          </button>
         </form>
       </div>
     )
   }
 
   return (
-    <div>
+    <div className="container">
       <h2>Blogs</h2>
       <Notification message={errorMessage} positive={isPositive} />
-      <p>
-        {user.name} logged in <button onClick={logout}>Logout</button>
+      <p className="logged">
+        {user.name} logged in{' '}
+        <button onClick={logout} className="btn btn-outline-dark btn-sm">
+          Logout
+        </button>
       </p>
       <Togglable buttonLabel="New blog" ref={blogFormRef}>
         <BlogForm addBlog={addBlog} />
